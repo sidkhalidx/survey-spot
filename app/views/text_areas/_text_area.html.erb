@@ -1,0 +1,16 @@
+<div class="container mb-2 mt-2">
+    <div class="card">
+        <h3 class="text-center">Text Area</h1>
+        <div class="card-body">
+            <%= form_with model: [parent, obj], class:"text-center", local: false do |form|  %>
+                <%= form.label :what_should_the_title_for_this_text_area, class:"text-left" %><br>
+                <div class="input-group">
+                    <%= form.text_field :title, class: "form-control" %>
+                    <div class="input-group ">
+                        <%= form.label :Make_this_field_required? %><%= form.check_box :is_required, class:"form-check-input" %> 
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="card">
+        <h3 class="text-center">Add Radio Buttons</h3>
+        <div class="card-body">
+            <%= form_with model: [parent, obj], class: "text-center", local: false do |form| %>
+                <%= form.label :Add_a_label_for_these_radio_buttons %>
+                <%= form.text_field :title, class:"form-control mb-2" %>
+                <div id="radio-option-section">
+                    <% obj.radio_button_options.each do |option| %>
+                        <%= render(partial: 'radio_button_options/radio_button_options', locals: { obj: option }) %>
+                    <% end %>
+                </div>
+                <input type="button" class="btn btn-success" id="add-radio-option" style="float:right" value="Add option" />
+                <div class="input-group ">
+                    <%= form.label :Make_this_field_required? %><%= form.check_box :is_required, class:"form-check-input" %> 
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

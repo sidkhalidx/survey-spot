@@ -1,0 +1,6 @@
+<%= form_with model: obj, local: false do |option_form| %>
+    <div class="input-group radio-options mb-2">
+        <%= option_form.text_field :option, class:"form-control", placeholder: 'write option here..' %>
+        <button class="btn bg-danger delete-radio-option" type="button" class="delete-radio-option" >Delete</button>
+    </div>
+<% end %>
