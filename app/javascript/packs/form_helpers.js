@@ -8,6 +8,7 @@ document.addEventListener('turbolinks:load', ()=>{
             console.log(form)
             fd = new FormData(form)
             entries = Object.fromEntries(fd)
+            // setTimeout(()=>{
             $.ajax({
                 url: form.getAttribute('action'),
                 method: "POST",
@@ -19,9 +20,12 @@ document.addEventListener('turbolinks:load', ()=>{
                     console.log('text status: '+ textStatus+', error thrown: '+ errorThrown+' xml: '+XMLHttpRequest.responseText)
                 }
             })
+            // }, 000)
         })
         console.log('finished')
-        window.location.reload()
+        setTimeout(()=>{
+            window.location.reload()
+        }, 2000)
     })
     $('#new-field').on('click', ()=>{
         temp = document.getElementById('form-fields')

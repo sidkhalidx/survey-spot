@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2021_09_20_135518) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "forms", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_09_20_135518) do
     t.string "option"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "radio_field_id"
+    t.bigint "radio_field_id"
     t.index ["radio_field_id"], name: "index_radio_button_options_on_radio_field_id"
   end
 
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 2021_09_20_135518) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "is_required"
-    t.integer "form_id"
+    t.bigint "form_id"
     t.index ["form_id"], name: "index_radio_fields_on_form_id"
   end
 
@@ -40,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_09_20_135518) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "title"
     t.boolean "is_required"
-    t.integer "form_id"
+    t.bigint "form_id"
     t.index ["form_id"], name: "index_text_areas_on_form_id"
   end
 
@@ -49,7 +52,7 @@ ActiveRecord::Schema.define(version: 2021_09_20_135518) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "title"
     t.boolean "is_required"
-    t.integer "form_id"
+    t.bigint "form_id"
     t.index ["form_id"], name: "index_text_fields_on_form_id"
   end
 
