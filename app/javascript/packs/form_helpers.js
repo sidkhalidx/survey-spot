@@ -30,11 +30,11 @@ document.addEventListener('turbolinks:load', ()=>{
     $('#new-field').on('click', ()=>{
         temp = document.getElementById('form-fields')
         type = document.getElementById('to-be-added-field').value
-        form_id = document.getElementById('form-id')
+        form_id = document.getElementById('form-id').value
         $.ajax({
-            url: '/forms/add_new_field',
+            url: '/forms/'+form_id+'/add_new_field',
             method: "POST",
-            data: {"type": type, "id":form_id.value },
+            data: {"type": type, "id":form_id },
             success:(response)=>{
                 var div = document.createElement('div')
                 div.innerHTML = response
@@ -48,9 +48,13 @@ document.addEventListener('turbolinks:load', ()=>{
     })
     document.body.addEventListener('click', (event)=>{
         if(event.target.id=="add-radio-option"){
+            form_id = document.getElementById('form-id').value
+            radio_id = document.getElementById('radio-obj').value
+            console.log(radio_id)
             $.ajax({
-                url: '/radio_button_options/new',
-                method: "GET",
+                url: '/forms/'+form_id+'/radio_fields/add_radio_option',
+                method: "POST",
+                data: { "form_id": form_id, "radio_id": radio_id },
                 success:(response)=>{
                     var div = document.createElement('div')
                     div.innerHTML = response
@@ -66,5 +70,4 @@ document.addEventListener('turbolinks:load', ()=>{
             
         }
     })
-
 })

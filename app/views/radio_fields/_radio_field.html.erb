@@ -2,7 +2,12 @@
     <div class="card">
         <h3 class="text-center">Add Radio Buttons</h3>
         <div class="card-body">
-            <%= form_with model: [parent, obj], class: "text-center", local: false do |form| %>
+            <%= form_with model: [parent, obj], class: "text-center ",id: "radio-field", local: false do |form| %>
+                <% if obj.id %>
+                    <input type="hidden" id="radio-obj" value=<%= obj.id %> >
+                <% else %>
+                    <input type="hidden" id="radio-obj" value=-1 >
+                <% end %>
                 <%= form.label :Add_a_label_for_these_radio_buttons %>
                 <%= form.text_field :title, class:"form-control mb-2" %>
                 <div id="radio-option-section">
@@ -11,7 +16,7 @@
                     <% end %>
                 </div>
                 <input type="button" class="btn btn-success" id="add-radio-option" style="float:right" value="Add option" />
-                <div class="input-group ">
+                <div class="input-group">
                     <%= form.label :Make_this_field_required? %><%= form.check_box :is_required, class:"form-check-input" %> 
                 </div>
             <% end %>

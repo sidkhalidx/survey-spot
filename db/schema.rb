@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_20_135518) do
+ActiveRecord::Schema.define(version: 2021_09_22_071646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "field_options", force: :cascade do |t|
+    t.string "label"
+    t.bigint "field_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["field_id"], name: "index_field_options_on_field_id"
+  end
+
+  create_table "fields", force: :cascade do |t|
+    t.integer "field_type"
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "forms", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -56,4 +71,5 @@ ActiveRecord::Schema.define(version: 2021_09_20_135518) do
     t.index ["form_id"], name: "index_text_fields_on_form_id"
   end
 
+  add_foreign_key "field_options", "fields"
 end

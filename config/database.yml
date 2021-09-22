@@ -7,8 +7,8 @@
 default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: siddique
-  password: 
+  username: siddique   # Rails.application.db_username
+  password:                    #Rails.application.db_password
   timeout: 5000
 
 development:
