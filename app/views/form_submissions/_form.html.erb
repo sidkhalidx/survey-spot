@@ -1,0 +1,10 @@
+<%= form_with model: [@form, @form_submission], class:"mt-4" do |f| %>
+  <% @form.fields.each do |field| %>
+    <div class="container">
+      <%= render field.field_type.underscore+'_field', f:f, field:field %><br/>
+    </div>
+  <% end %>
+  <div class="d-flex justify-content-end container">
+    <%= f.submit 'submit', class:"btn btn-success" %>
+  </div>
+<% end %>

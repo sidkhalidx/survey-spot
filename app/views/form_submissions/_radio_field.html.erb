@@ -1,0 +1,7 @@
+<%= f.label field.title %>
+<br/>
+<% field.field_options.each do |option| %>
+  <%= f.label option.label %>
+  <%= f.radio_button field.title.parameterize.underscore, option.label.to_s.parameterize.underscore %>
+  <br/>
+<% end %>

@@ -1,0 +1,15 @@
+<%= form_with model: @form, class:"mt-5", local: false do |f| %>
+  <%= f.label :title_of_form, params[:name] %>
+  <%= f.text_field :title %>
+  <br/>
+  <%= f.fields_for :fields do |field| %>
+    <%= render 'field_fields', f:field %>
+  <% end %>
+  <div class="links">
+    <div class="d-flex justify-content-end" id="add_field_button" >
+      <%= link_to_add_association 'add field', f, :fields,
+          id:"add_field", class:"btn btn-primary m-2" %>
+    </div>
+  </div>
+  <%= f.submit 'Create From', class: "btn btn-success" %>
+<% end %>

@@ -1,1 +1,20 @@
-<p>hello cocoon</p>
+<div class="nested-fields">
+  
+    <div id="field_type">
+      <%= f.label :field_type %>
+      <%= f.select :field_type, options_for_select(["Select", "TextField", "TextArea", "Radio"], f.object.field_type) %>
+    </div>
+    <div id="form_field">
+      <%= f.label :question %>
+      <%= f.text_field :title %>
+      <%= link_to_remove_association 'delete', f, class:"btn btn-danger" %>
+      <%= f.fields_for :field_options do |field_option| %>
+        <%= render 'field_option_fields', f:field_option %>
+      <% end %>
+      <div class="links" id="form_field_option">
+        <div class="d-flex flex-row-reverse">
+          <%= link_to_add_association 'add option', f, :field_options, class:"btn btn-primary mt-2"  %>
+        </div>
+      </div>
+    </div>
+</div>
