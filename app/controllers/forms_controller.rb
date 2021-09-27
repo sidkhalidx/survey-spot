@@ -19,7 +19,7 @@ class FormsController < ApplicationController
         @form.update(form_params)
     end
     def form_params
-        params.require(:form).permit(:title, fields_attributes: [:id, :field_type, :title, field_options_attributes: [:id, :label]])
+        params.require(:form).permit(:title, fields_attributes: [:id, :field_type, :title, :is_required, field_options_attributes: [:id, :label]])
     end
 end
 
