@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_091954) do
+ActiveRecord::Schema.define(version: 2021_09_23_143654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.text "answer"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "field_id"
+    t.bigint "form_submission_id"
+    t.index ["field_id"], name: "index_answers_on_field_id"
+    t.index ["form_submission_id"], name: "index_answers_on_form_submission_id"
+  end
 
   create_table "field_options", force: :cascade do |t|
     t.string "label"
@@ -29,7 +39,9 @@ ActiveRecord::Schema.define(version: 2021_09_23_091954) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "form_id"
+    t.bigint "form_submission_id"
     t.index ["form_id"], name: "index_fields_on_form_id"
+    t.index ["form_submission_id"], name: "index_fields_on_form_submission_id"
   end
 
   create_table "form_submissions", force: :cascade do |t|

@@ -18,7 +18,7 @@ document.addEventListener('turbolinks:load', ()=>{
         if(value=="TextField" || value=="TextArea"){
             parent.node('#form_field').style.display="block"
             parent.node('#form_field_option').style.display="none"
-        }else if(value=="Radio"){
+        }else if(value=="Radio" || value=="CheckBox"){
             parent.node('#form_field').style.display="block"
             parent.node('#form_field_option').style.display="block"
         }else{
@@ -37,7 +37,7 @@ document.addEventListener('turbolinks:load', ()=>{
             if(field=="TextField" || field=="TextArea"){
                 parent.querySelector('#form_field').style.display="block"
                 parent.querySelector('#form_field_option').style.display="none"
-            }else if(field=="Radio"){
+            }else if(field=="Radio" || field=="CheckBox"){
                 parent.querySelector('#form_field').style.display="block"
                 parent.querySelector('#form_field_option').style.display="block"
             }else{
