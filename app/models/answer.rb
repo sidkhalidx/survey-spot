@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   belongs_to :field
   belongs_to :form_submission
+  has_one_attached :images
 
   after_validation :checking
 

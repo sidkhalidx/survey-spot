@@ -5,6 +5,7 @@ class FormSubmissionsController < ApplicationController
   end
 
   def create
+    byebug
     @form = Form.find(params[:form_id])
     @form_submission = @form.form_submissions.build(form_submission_params)
     @form_submission.save
@@ -21,6 +22,6 @@ class FormSubmissionsController < ApplicationController
     # byebug
   end
   def form_submission_params
-    params.require(:form_submission).permit(:id, answers_attributes: [:id, :field_id, :answer])
+    params.require(:form_submission).permit(:id, answers_attributes: [:id, :field_id, :answer, :images])
   end
 end
