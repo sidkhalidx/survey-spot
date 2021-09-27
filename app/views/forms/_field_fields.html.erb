@@ -1,7 +1,7 @@
 <div class="nested-fields">
     <div id="field_type">
       <%= f.label :field_type %>
-      <%= f.select :field_type, options_for_select(["Select", "TextField", "TextArea", "Radio", "CheckBox"], f.object.field_type) %>
+      <%= f.select :field_type, options_for_select(["Select", "TextField", "TextArea", "Radio", "CheckBox", "DateField"], f.object.field_type) %>
     </div>
     <div id="form_field">
       <%= f.label :question %>

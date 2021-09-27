@@ -34,7 +34,7 @@ document.addEventListener('turbolinks:load', ()=>{
             parent = parent.parentNode
             console.log('parent')
             console.log(parent)
-            if(field=="TextField" || field=="TextArea"){
+            if(field=="TextField" || field=="TextArea" || field=="DateField"){
                 parent.querySelector('#form_field').style.display="block"
                 parent.querySelector('#form_field_option').style.display="none"
             }else if(field=="Radio" || field=="CheckBox"){
