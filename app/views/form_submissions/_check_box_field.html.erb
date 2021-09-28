@@ -10,14 +10,14 @@
     <% end %>
     <%= f.fields_for :answers, temp do |a| %>
       <%= a.hidden_field :field_id, value: field.id %>
-      <%= option.label %><%= a.check_box :answer, { checked: !temp.new_record?, include_blank: true }, option.label, "to_be_deleted" %><br/>
+      <%= option.label %><%= a.check_box :answer, { checked: !temp.new_record?}, option.label, "to_be_deleted" %><br/>
     <% end %>
   <% end %>
 <% else %>
   <% field.field_options.each do |option| %>
     <%= f.fields_for :answers, field.answers.build do |a| %>
       <%= a.hidden_field :field_id, value: field.id %>
-      <%= option.label %><%= a.check_box :answer, { include_blank: true }, option.label, "to_be_deleted" %><br/>
+      <%= option.label %><%= a.check_box :answer, { }, option.label, "to_be_deleted" %><br/>
     <% end %>
   <% end %>
 <% end %>

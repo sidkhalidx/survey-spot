@@ -6,7 +6,7 @@ class FormsController < ApplicationController
 
     def create
         @form = Form.new(form_params)
-        byebug
+        # byebug
         @form.save
     end
     

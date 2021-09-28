@@ -5,8 +5,4 @@ class Field < ApplicationRecord
   accepts_nested_attributes_for :answers
   accepts_nested_attributes_for :field_options, allow_destroy: true
   enum field_type: [:TextField, :TextArea, :Radio, :CheckBox, :DateField, :FileField]
-
-
-
-
 end

@@ -16,6 +16,7 @@ class FormSubmissionsController < ApplicationController
     @form_submission = @form.form_submissions.find(params[:id])
   end
   def update
+    byebug
     @form_submission = FormSubmission.find(params[:id])
     p = form_submission_params
     @form_submission.update(form_submission_params)
