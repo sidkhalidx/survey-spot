@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>Organizations</h1>
+  <%= link_to 'make organization', new_user_organization_path(current_user), class:"btn btn-dark mb-2" %>
+  <br/>
+  <% @organizations.each do |organization| %>
+    <%= organization.name %> <%= link_to 'Show', user_organization_path(current_user, organization), class:"btn btn-success" %> <%= link_to 'Edit', edit_user_organization_path(current_user, organization), class:"btn btn-warning" %> <%= link_to 'Delete', user_organization_path(current_user, organization), method: :delete, class:"btn btn-danger" %>
+    <br/>
+  <% end %>
+</div>

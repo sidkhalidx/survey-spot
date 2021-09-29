@@ -1,23 +1,11 @@
 <label><%= field.title %></label>
+<%= '*required' if field.is_required %>
 <br/>
-<% if params[:action]=='edit' %>
-  <% field.field_options.each do |option| %>
-    <% temp = nil %>
-    <% if field.answers.try(:any?) && field.answers.find_by(form_submission: @form_submission).present? && field.answers.find_by(form_submission: @form_submission, answer: option.label).present? %> 
-      <% temp = field.answers.find_by(form_submission: @form_submission, answer: option.label) %>
-    <% else %>
-      <% temp = field.answers.build %>
-    <% end %>
-    <%= f.fields_for :answers, temp do |a| %>
-      <%= a.hidden_field :field_id, value: field.id %>
-      <%= option.label %><%= a.check_box :answer, { checked: !temp.new_record?}, option.label, "to_be_deleted" %><br/>
-    <% end %>
-  <% end %>
-<% else %>
-  <% field.field_options.each do |option| %>
-    <%= f.fields_for :answers, field.answers.build do |a| %>
-      <%= a.hidden_field :field_id, value: field.id %>
-      <%= option.label %><%= a.check_box :answer, { }, option.label, "to_be_deleted" %><br/>
-    <% end %>
+
+<% field.field_options.each do |option| %>
+  <% temp = get_model_object_option(field, @form_submission.id, option.label) %>
+  <%= f.fields_for :answers, temp do |a| %>
+    <%= a.hidden_field :field_id, value: field.id %>
+    <%= option.label %><%= a.check_box :answer, { checked: !temp.new_record?}, option.label, "to_be_deleted" %><br/>
   <% end %>
 <% end %>

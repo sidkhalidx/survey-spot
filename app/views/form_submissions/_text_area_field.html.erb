@@ -1,12 +1,9 @@
 <label><%= field.title %></label>
-<% if params[:action]=='edit' %>
-  <%= f.fields_for :answers, field.answers.find_by(form_submission: @form_submission) do |a| %>
-    <%= a.hidden_field :field_id, value: field.id %>
-    <%= a.text_area :answer, class:"form-control" %>
-  <% end %>
-<% else %>
-  <%= f.fields_for :answers, field.answers.build do |a| %>
-    <%= a.hidden_field :field_id, value: field.id %>
-    <%= a.text_area :answer, class:"form-control" %>
-  <% end %>
+<%= '*required' if field.is_required %>
+
+<% temp=get_model_object(field, @form_submission.id) %>
+
+<%= f.fields_for :answers, temp do |a| %>
+  <%= a.hidden_field :field_id, value: field.id %>
+  <%= a.text_area :answer, class:"form-control" %>
 <% end %>

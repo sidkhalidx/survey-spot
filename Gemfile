@@ -11,6 +11,8 @@ gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'cocoon', '~> 1.2', '>= 1.2.15'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
+gem 'devise', '~> 4.8'
+gem 'pundit', '~> 2.1', '>= 2.1.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker

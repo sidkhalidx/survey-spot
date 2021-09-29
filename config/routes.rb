@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :users do
+    resources :organizations
+  end
+  devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'forms#new'
   post '/forms/add_new_field', to: 'forms#add_new_field', as: 'add_new_field'
@@ -7,4 +11,5 @@ Rails.application.routes.draw do
   resources :forms do
     resources :form_submissions
   end
+
 end

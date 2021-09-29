@@ -7,40 +7,30 @@ class FormSubmission < ApplicationRecord
   validate :checking_required_fields
 
   private
-    def checking_required_fields
-      byebug
-      self.form.fields.where(is_required: true).each do |field|
-        byebug
-        field_answers = self.answers.select do |answer|
-          if answer.field_id==field.id
-            answer
-          end
-        end
-        if field.field_type=="CheckBox"
-          error=true
-          field_answers.each do |answer|
-            if !answer.marked_for_destruction?
-              error = false
-            end
-          end
-          if error
-            self.errors.add(:answer, message:"field is empty")
-          end
-        else
-          if field_answers[0].answer.blank?
-            self.errors.add(:answer, message:"field is empty")
-          end
-        end
-        byebug
+    def get_answers(field)
+      self.answers.select do |answer|
+        answer if answer.field_id==field.id
       end
-      # self.answers.each do |answer|
-      #   if answer.field.is_required && answer.answer.blank?
-      #     byebug
-      #     self.errors.add(:answer, :answer_not_given, message:"#{answer.field.title} Answer can't be empty")
-      #     byebug
-      #   elsif !answer.field.is_required? && answer.answer.blank?
-      #     answer.mark_for_destruction
-      #   end
-      # end
+    end
+    
+    def multi_answer_error(field_answers)
+      field_answers.each do |answer|
+        if !answer.marked_for_destruction?
+          return false
+        end
+      end
+      return true
+    end
+
+    def checking_required_fields
+      self.form.fields.where(is_required: true).each do |field|
+        field_answers = get_answers(field)
+        if field.field_type=="CheckBox"
+          error=multi_answer_error(field_answers)
+          self.errors.add(:answer, message:"field is empty") if error
+        else
+          self.errors.add(:answer, message:"field is empty") if field_answers[0].answer.blank?
+        end
+      end
     end
 end

@@ -1,0 +1,7 @@
+<%= form_with model: [current_user, @organization], local: false do |org| %>
+  <%= org.label :Name_of_organization %>
+  <%= org.text_field :name %>
+  <br/>
+  <%=  %>
+  <%= org.submit %>
+<% end %>

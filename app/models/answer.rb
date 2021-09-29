@@ -8,7 +8,6 @@ class Answer < ApplicationRecord
     if (self.answer=="to_be_deleted" && self.field.field_type=="CheckBox") || ( !self.field.is_required? && self.answer.blank? )
       self.mark_for_destruction
     end
-    byebug
     true
   end
 end

@@ -1,20 +1,14 @@
 <label><%= field.title %></label>
-<% if params[:action]=='edit' %>
-  <% answer_ = field.answers.find_by(form_submission: @form_submission) %>
-  <%= f.fields_for :answers, answer_ do |a| %>
-    <%= a.hidden_field :field_id, value: field.id %>
-    <%= a.hidden_field :answer, value: 'its_a_file_field' %>
-    <%= a.file_field :images, class:"form-control" %>
-    <% if answer_.images.attached? %>
-      Currently selected: <%= link_to answer_.images.filename, rails_blob_path(answer_.images, disposition: 'preview' ) %>
-    <% else %>
-      <p>No file given</p>
-    <% end %>
-  <% end %>
-<% else %>
-  <%= f.fields_for :answers, field.answers.build do |a| %>
-    <%= a.hidden_field :field_id, value: field.id %>
-    <%= a.hidden_field :answer, value: 'its_a_file_field' %>
-    <%= a.file_field :images, class:"form-control" %>
+<%= '*required' if field.is_required %>
+
+<% temp=get_model_object(field, @form_submission.id) %>
+<%= f.fields_for :answers, temp do |a| %>
+  <%= a.hidden_field :field_id, value: field.id %>
+  <%= a.hidden_field :answer, value: 'its_a_file_field' %>
+  <%= a.file_field :images, class:"form-control" %>
+  <% if temp.images.attached? %>
+    Currently selected: <%= link_to temp.images.filename, rails_blob_path(temp.images, disposition: 'preview' ) %>
+  <% else %>
+    <p>No file given</p>
   <% end %>
 <% end %>

@@ -1,17 +1,11 @@
 <label><%= field.title %></label>
+<%= '*required' if field.is_required %>
 <br/>
-<% if params[:action]=='edit' %>
-  <%= f.fields_for :answers, field.answers.find_by(form_submission: @form_submission) do |a| %>
-    <%= a.hidden_field :field_id, value: field.id %>
-    <% field.field_options.each do |option| %>
-      <%= option.label %><%= a.radio_button :answer, option.label.parameterize.underscore %><br/>
-    <% end %>
-  <% end %>
-<% else %>
-  <%= f.fields_for :answers, field.answers.build do |a| %>
-    <%= a.hidden_field :field_id, value: field.id %>
-    <% field.field_options.each do |option| %>
-      <%= option.label %><%= a.radio_button :answer, option.label.parameterize.underscore %><br/>
-    <% end %>
+
+<% temp=get_model_object(field, @form_submission.id) %>
+<%= f.fields_for :answers, temp do |a| %>
+  <%= a.hidden_field :field_id, value: field.id %>
+  <% field.field_options.each do |option| %>
+    <%= option.label %><%= a.radio_button :answer, option.label.parameterize.underscore %><br/>
   <% end %>
 <% end %>
