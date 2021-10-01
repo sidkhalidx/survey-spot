@@ -1,5 +1,9 @@
 class FormsController < ApplicationController
 
+    def index
+        @forms = current_user.forms.all
+    end
+
     def new
         @form = Form.new
     end

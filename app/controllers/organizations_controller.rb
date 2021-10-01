@@ -1,13 +1,21 @@
 class OrganizationsController < ApplicationController
   def index
     @organizations = Organization.all
+    authorize @organizations
   end
   def new
     @organization = current_user.organizations.build
+    authorize @organization
   end
   def create
     @organization = current_user.organizations.build(organization_params)
-    @organization.save
+    @organization.admins[0].role="admin"
+    @password = @organization.admins[0].password
+    if @organization.save
+      UserMailer.with(user: @organization.admins[0], password: @password).send_credentials.deliver_later
+    else
+      render 'new'
+    end
     redirect_to user_organizations_path
   end
   def show
@@ -28,6 +36,7 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    params.require(:organization).permit(:name)
+    p = params.require(:organization).permit(:name, admins_attributes: [:id, :username, :email, :password])
+    return p
   end
 end

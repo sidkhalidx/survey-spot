@@ -1,4 +1,5 @@
 class Form < ApplicationRecord
+    belongs_to :user
     has_many :fields, dependent: :destroy
     accepts_nested_attributes_for :fields, allow_destroy: true
     has_many :form_submissions

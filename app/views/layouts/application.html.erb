@@ -23,12 +23,16 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            <li class="nav-item">
-              <%= link_to 'Organizations', user_organizations_path(current_user), class:"nav-link" %>
-            </li>
+            <% if user_signed_in? && current_user.super_admin? %>
+              <li class="nav-item">
+                <%= link_to 'Organizations', user_organizations_path(current_user), class:"nav-link" %>
+              </li>
+            <% end %>
           </ul>
           <form class="d-flex">
-              <%= link_to current_user.username, destroy_user_session_path, class:"nav-link" %>
+              <% if user_signed_in? %>
+                <a href="#" class="nav-link"><%= current_user.username %></a>
+              <% end %>
               <div class="dropdown">
                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -49,8 +53,16 @@
         </div>
       </div>
     </nav>
+    <div class="row">
+      <div class="col-2">
+        <%= render 'layouts/home' %>
+      </div>
+      <div class="col-10 bg-light">
+        <%= yield %>
+      </div>
+    </div>
     
-    <%= yield %>
+    
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
   </body>

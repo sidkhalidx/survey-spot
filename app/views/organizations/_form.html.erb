@@ -1,7 +1,14 @@
 <%= form_with model: [current_user, @organization], local: false do |org| %>
   <%= org.label :Name_of_organization %>
-  <%= org.text_field :name %>
+  <%= org.text_field :name, class:"form-control" %>
   <br/>
-  <%=  %>
-  <%= org.submit %>
+  <h3>Create admin for this organization</h3>
+  <%= org.fields_for :admins, @organization.admins.build do |admin| %>
+    <%= admin.label :username %>
+    <%= admin.text_field :username, class:"form-control" %>
+    <%= admin.label :email %>
+    <%= admin.email_field :email, class:"form-control" %>
+    <%= admin.hidden_field :password, value: Random.rand(111111...999999) %>
+  <% end %>
+  <%= org.submit class:"btn btn-primary mt-2" %>
 <% end %>

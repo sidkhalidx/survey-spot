@@ -1,0 +1,12 @@
+<ul class="nav flex-column">
+  <% if user_signed_in? && current_user.super_admin? %>
+    <li class="nav-item">
+      <%= link_to 'Organizations', user_organizations_path(current_user), class:"nav-link" %>
+    </li>
+  <% end %>
+  <% if user_signed_in? && current_user.admin? %>
+    <li class="nav-item">
+      <%= link_to 'Surveys', user_forms_path(current_user), class:"nav-link" %>
+    </li>
+  <% end %>
+</ul>

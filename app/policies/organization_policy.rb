@@ -5,14 +5,14 @@ class OrganizationPolicy < ApplicationPolicy
     end
   end
   
-  def index
-    current_user.super_admin?
+  def index?
+    @user.super_admin?
   end
   def show
     current_user.super_admin?
   end
-  def new
-    current_user.super_admin?
+  def new?
+    @user.super_admin?
   end
   def create
     current_user.super_admin?
