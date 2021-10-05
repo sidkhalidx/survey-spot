@@ -1,0 +1,7 @@
+<%= f.fields_for :end_users do |e| %>
+  <%= f.label :Enter_email %>
+  <%= f.email_field :email, class:"form-control" %>
+  <% unless e.object.nil? %>
+   <%= link_to 'resend', current_user %>
+  <% end %>
+<% end %>

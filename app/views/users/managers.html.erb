@@ -1,0 +1,18 @@
+<div>
+  <%= link_to 'Create Manager--', manager_new_user_path(current_user) %>
+</div>
+<div class="mt-4">
+  <% @managers.each do |manager| %>
+    <div class="row">
+      <div class="col-3 p-2">
+        <%= manager.username %>
+      </div>
+      <div class="col-9">
+        <ul class="nav flex-row">
+          <li class="nav-link"><%= link_to 'Edit', edit_user_path(manager), class:"btn btn-warning nav-item" %></li>
+          <li class="nav-link"><%= link_to 'Delete', user_path(manager), method: :delete, class:"btn btn-danger nav-item" %></li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

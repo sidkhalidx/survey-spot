@@ -20,9 +20,11 @@ class OrganizationsController < ApplicationController
   end
   def show
     @organization = Organization.find(params[:id])
+    authorize @organization
   end
   def edit
     @organization = Organization.find(params[:id])
+    authorize @organization
   end
   def update
     @organization = Organization.find(params[:id])
@@ -31,6 +33,7 @@ class OrganizationsController < ApplicationController
   end
   def destroy
     @organization = Organization.find(params[:id])
+    authorize @organization
     @organization.destroy
     redirect_to user_organizations_path(current_user)
   end

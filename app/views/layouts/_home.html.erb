@@ -1,11 +1,20 @@
 <ul class="nav flex-column">
   <% if user_signed_in? && current_user.super_admin? %>
-    <li class="nav-item">
+    <li class="nav-item border">
       <%= link_to 'Organizations', user_organizations_path(current_user), class:"nav-link" %>
     </li>
-  <% end %>
-  <% if user_signed_in? && current_user.admin? %>
-    <li class="nav-item">
+  <% elsif user_signed_in? && current_user.admin? %>
+    <li class="nav-item border">
+      <%= link_to 'Surveys', user_forms_path(current_user), class:"nav-link" %>
+    </li>
+    <li class="nav-item border">
+      <%= link_to 'Managers', managers_user_path(current_user), class:"nav-link" %>
+    </li>
+    <li class="nav-item border">
+      <%= link_to 'Admins', admins_user_path(current_user), class:"nav-link" %>
+    </li>
+  <% elsif user_signed_in? && current_user.manager? %>
+    <li class="nav-item border">
       <%= link_to 'Surveys', user_forms_path(current_user), class:"nav-link" %>
     </li>
   <% end %>

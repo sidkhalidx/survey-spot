@@ -1,3 +1,29 @@
-<% @forms.each do |form| %>
-  <%= form.name %>
-<% end %>
+
+  <div>
+    <%= link_to 'Create Survey', new_user_form_path(current_user) %>
+  </div>
+  
+<div class="mt-4">
+  <% @forms.each do |form| %>
+    <div class="row">
+      <div class="col-3 p-2">
+        <%= form.title %>
+      </div>
+      <div class="col-9">
+        <ul class="nav flex-row">
+          <% if current_user.admin? %>
+            <li class="nav-link"><%= link_to 'Edit', edit_user_form_path(current_user, form), class:"btn btn-warning nav-item" %></li>
+            <li class="nav-link"><%= link_to 'Delete', user_form_path(current_user, form), method: :delete, class:"btn btn-danger nav-item" %></li>
+            <% if form.form_type!="email_form" %>
+              <li class="nav-link"><button class="nav-item btn btn-dark copy_link" value="<%= new_form_form_submission_url(form) %>" >Copy link</button></li>
+            <% else %>
+              <li class="nav-link"><%= link_to 'Emails', emails_form_path(form), class:"btn btn-danger nav-item" %></li>
+            <% end %>
+          <% end %>
+          <li class="nav-link"><%= link_to 'View Results', form_form_submissions_path(form), class:"btn btn-danger nav-item" %></li>
+          
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,18 @@
+<h3>Sent mail to</h3>
+<div class="container">
+  <%= form_with model: @form.end_users.build, url:post_send_emails_form_path(@form) do |f| %>
+    <%= f.label :Enter_comma_separated_emails %>
+    <%= f.text_field :email, class:"form-control" %>
+    <%= f.submit 'send', class:"btn btn-warning mt-2" %>
+  <% end %>
+</div>
+<h3>Mail sent to</h3>
+<div class="container">
+  <div class="border">
+    <% @to_emails.each do |email| %>
+      <div class="border-down m-2">
+        <%= email.email %> <button class="btn btn-warning p-1 resend_email" data-email="<%= email.email %>" value="<%= @form.id %>">Resend</button>
+      </div>
+    <% end %>
+  </div>
+</div>

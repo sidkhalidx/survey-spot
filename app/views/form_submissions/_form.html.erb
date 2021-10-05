@@ -1,4 +1,8 @@
 <%= form_with model: [@form, @form_submission], class:"mt-4" do |f| %>
+  <div class="header">
+    <h3><%= @form.title %></h3>
+  </div>
+  <%= f.text_field :email, value: @email, readonly: true, hidden: true %>
   <% @form.fields.each do |field| %>
     <div class="container">
         <%= render field.field_type.underscore+'_field', f:f, field:field %><br/>

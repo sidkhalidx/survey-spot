@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_30_130106) do
+ActiveRecord::Schema.define(version: 2021_10_05_081425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 2021_09_30_130106) do
     t.index ["form_submission_id"], name: "index_answers_on_form_submission_id"
   end
 
+  create_table "end_users", force: :cascade do |t|
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "form_id"
+    t.index ["form_id"], name: "index_end_users_on_form_id"
+  end
+
   create_table "field_options", force: :cascade do |t|
     t.string "label"
     t.bigint "field_id", null: false
@@ -77,6 +85,7 @@ ActiveRecord::Schema.define(version: 2021_09_30_130106) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "form_id"
+    t.string "email"
     t.index ["form_id"], name: "index_form_submissions_on_form_id"
   end
 
@@ -85,6 +94,9 @@ ActiveRecord::Schema.define(version: 2021_09_30_130106) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "title"
     t.bigint "user_id"
+    t.bigint "organization_id"
+    t.integer "form_type"
+    t.index ["organization_id"], name: "index_forms_on_organization_id"
     t.index ["user_id"], name: "index_forms_on_user_id"
   end
 

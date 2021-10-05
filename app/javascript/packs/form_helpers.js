@@ -1,12 +1,36 @@
 document.addEventListener('turbolinks:load', ()=>{
-    // adder = document.getElementById('add_field_button')
-    // adder = adder.getElementsByTagName('a')[0]
-    // adder.addEventListener('click', ()=>{
-    //     c = document.getElementsByClassName('nested-fields').length
-    //     console.log(c)
-    //     node = document.getElementsByClassName('nested-fields')[0]
-    //     console.log(node)
-    // })
+    var copy_links = document.getElementsByClassName('copy_link')
+    var copylink = function(){
+        navigator.clipboard.writeText(this.value)
+        this.innerHTML='copied'
+        setTimeout(()=>{
+            this.innerHTML='Copy Link'
+        }, 1000)
+    }
+    for (var i=0; i<copy_links.length; i++){
+        copy_links[i].addEventListener('click', copylink, false)
+    }
+    var resend_email = document.getElementsByClassName('resend_email')
+    var resendEmail = function(){
+        $.ajax({
+            url: '/forms/'+this.value+'/resend_email',
+            method: "POST",
+            data: { "email": this.getAttribute("data-email"), "form_id": this.value },
+            success:(response)=>{
+            },
+            error:(XMLHttpRequest, textStatus, errorThrown)=>{
+            }
+        })
+        console.log(this.getAttribute("data-email"))
+        this.innerHTML='email sent'
+        setTimeout(()=>{
+            this.innerHTML='Resend'
+        }, 1000)
+    }
+    for (var i=0; i<resend_email.length; i++){
+        resend_email[i].addEventListener('click', resendEmail, false)
+    }
+
     function all_field_type_setting(){
         p = document.getElementsByClassName('nested-fields')
         p.forEach((node, index, array)=>{

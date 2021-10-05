@@ -1,0 +1,13 @@
+<% action = nil %>
+<% if @user.new_record? %>
+    <% action = users_path %>
+<% else %>
+    <% action = user_path(@user) %>
+<% end %>
+<%= form_with model: @user, url: action, local: false do |user| %>
+  <%= user.label :username %>
+  <%= user.text_field :username, class:"form-control" %>
+  <%= user.label :email %>
+  <%= user.email_field :email, class:"form-control" %>
+  <%= user.submit class:"btn btn-success mt-2" %>
+<% end %>

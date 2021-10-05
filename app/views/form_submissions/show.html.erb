@@ -1,0 +1,10 @@
+<% @form_submission.form.fields.each do |field| %>
+  <div>
+    <%= field.title %>
+  </div>
+  <div class="p-2 border">
+    <% field.answers.where(form_submission_id: @form_submission.id).each do |answer| %>
+      <%= answer.answer %><br/>
+    <% end %>
+  </div>
+<% end %>
