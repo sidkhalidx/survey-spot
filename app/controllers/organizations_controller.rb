@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
   def index
-    @organizations = Organization.all
+    @organizations = Organization.search(params[:search])
     authorize @organizations
   end
   def new
@@ -39,7 +39,7 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    p = params.require(:organization).permit(:name, admins_attributes: [:id, :username, :email, :password])
+    p = params.require(:organization).permit(:name, :search, admins_attributes: [:id, :username, :email, :password])
     return p
   end
 end

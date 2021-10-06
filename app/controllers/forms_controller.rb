@@ -2,17 +2,19 @@ class FormsController < ApplicationController
 
     def index
         authorize Form
-        @forms = current_user.organization.forms.all
+        @organization = current_user.organization
+        @forms = Form.search(@organization.id, params[:search]).paginate(page: params[:page], per_page: 3)
     end
 
     def new
-        @form = current_user.forms.build
+        @organization = current_user.organization
+        @form = @organization.forms.build
         authorize @form
     end
 
     def create
-        @form = current_user.forms.build(form_params)
-        @form.organization = current_user.organization
+        @organization = current_user.organization
+        @form = @organization.forms.build(form_params)
         @form.save
     end
     
@@ -30,6 +32,7 @@ class FormsController < ApplicationController
         authorize Form
         @form = Form.find(params[:id])
         @to_emails = EndUser.where(form_id: params[:id])
+        @to_emails = Form.search_emails(@form, params[:search])
     end
     def post_send_emails
         emails = params.require(:end_user).permit(:email)
@@ -41,6 +44,11 @@ class FormsController < ApplicationController
             send_email(email_f, params[:id])
         end
     end
+    def answers
+        @form = Form.find(params[:id])
+        @field = Field.find(params[:field_id])
+        @answers = @field.answers
+    end
     def resend_email()
         email = params.require(:email)
         form_id = params.require(:form_id)
@@ -50,7 +58,7 @@ class FormsController < ApplicationController
         UserMailer.with(email: email.strip, form_id: form_id).send_email_form.deliver_later
     end
     def form_params
-        params.require(:form).permit(:title, :form_type, fields_attributes: [:id, :field_type, :title, :is_required, field_options_attributes: [:id, :label]])
+        params.require(:form).permit(:title, :form_type, :search, fields_attributes: [:id, :field_type, :title, :is_required, :_destroy, field_options_attributes: [:id, :label, :_destroy]])
     end
     def destroy
         @form = Form.find(params[:id])

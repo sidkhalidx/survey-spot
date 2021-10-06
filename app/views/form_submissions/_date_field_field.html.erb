@@ -5,5 +5,5 @@
 <% temp=get_model_object(field, @form_submission.id) %>
 <%= f.fields_for :answers, temp do |a| %>
   <%= a.hidden_field :field_id, value: field.id %>
-  <%= a.date_field :answer, class:"form-control", value: temp.try(:answer).try(:to_date) %>
+  <%= a.date_field :answer, class:"form-control", value: temp.try(:answer).try(:to_date), max:Time.now.to_date %>
 <% end %>

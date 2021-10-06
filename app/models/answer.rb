@@ -1,7 +1,7 @@
 class Answer < ApplicationRecord
   belongs_to :field
   belongs_to :form_submission
-  has_one_attached :images
+  has_one_attached :images, dependent: :destroy
   validate :deleting_unmarked_fields
 
   def deleting_unmarked_fields

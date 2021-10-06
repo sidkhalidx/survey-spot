@@ -1,6 +1,10 @@
 <div class="container">
   <h1>Organizations</h1>
   <%= link_to 'make organization', new_user_organization_path(current_user), class:"btn btn-dark mb-2" %>
+  <%= form_tag user_organizations_path(current_user), method: :get do %>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag 'search', class:"btn btn-dark p-1" %>
+  <% end %>
   <br/>
   <% @organizations.each do |organization| %>
     <%= organization.name %> <%= link_to 'Show', user_organization_path(current_user, organization), class:"btn btn-success" %> <%= link_to 'Edit', edit_user_organization_path(current_user, organization), class:"btn btn-warning" %> <%= link_to 'Delete', user_organization_path(current_user, organization), method: :delete, class:"btn btn-danger" %>

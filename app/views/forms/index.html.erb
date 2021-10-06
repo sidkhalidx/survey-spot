@@ -1,19 +1,23 @@
-
+<% if current_user.admin? %>
   <div>
-    <%= link_to 'Create Survey', new_user_form_path(current_user) %>
+    <%= link_to 'Create Survey', new_form_path %>
   </div>
-  
+<% end %>
+<%= form_tag forms_path, method: :get do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag 'search', class:"btn btn-dark p-1" %>
+<% end %>
 <div class="mt-4">
   <% @forms.each do |form| %>
-    <div class="row">
+    <div class="row shadow-sm m-1">
       <div class="col-3 p-2">
         <%= form.title %>
       </div>
       <div class="col-9">
         <ul class="nav flex-row">
           <% if current_user.admin? %>
-            <li class="nav-link"><%= link_to 'Edit', edit_user_form_path(current_user, form), class:"btn btn-warning nav-item" %></li>
-            <li class="nav-link"><%= link_to 'Delete', user_form_path(current_user, form), method: :delete, class:"btn btn-danger nav-item" %></li>
+            <li class="nav-link"><%= link_to 'Edit', edit_form_path(form), class:"btn btn-warning nav-item" %></li>
+            <li class="nav-link"><%= link_to 'Delete', form_path(form), method: :delete, class:"btn btn-danger nav-item" %></li>
             <% if form.form_type!="email_form" %>
               <li class="nav-link"><button class="nav-item btn btn-dark copy_link" value="<%= new_form_form_submission_url(form) %>" >Copy link</button></li>
             <% else %>
@@ -26,4 +30,5 @@
       </div>
     </div>
   <% end %>
+  <%= will_paginate @forms, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </div>

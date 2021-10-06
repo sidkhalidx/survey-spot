@@ -1,0 +1,11 @@
+<%= link_to 'go back', request.referrer, class:"btn btn-dark p-1" %>
+<h2><%= @field.title %></h2>
+<% @answers.each do |answer| %>
+  <div class="border m-2 p-2">
+    <% if @field.field_type=="FileField" %>
+      <%= link_to answer.images.filename, rails_blob_path(answer.images, disposition: 'preview' ) %>
+    <% else %>
+      <%= answer.answer %>
+    <% end %>
+  </div>
+<% end %>

@@ -5,3 +5,33 @@
     By: <%= link_to form_submission.email, form_form_submission_path(@form, form_submission) %>
   <% end %>
 <% end %>
+<br/>
+<div class="container">
+  <% @form.fields.each do |field| %>
+    <div class="mt-5">
+      <h3><%= field.title %></h3>
+      <% if field.field_options.any? %>
+        <div class="row">
+          <div class="col-6">
+            <%= pie_chart field.answers.group(:answer).count %>
+          </div>
+          <div class="col-6">
+            <%= bar_chart field.answers.group(:answer).count %>
+          </div>
+        </div>
+      <% elsif field.field_type=="DateField" %>
+        <span class="text-success">grouped by month<span>
+        <div class="row">
+          <div class="col-6">
+            <%= pie_chart field.answers.group_by_month(:answer).count %>
+          </div>
+          <div class="col-6">
+            <%= bar_chart field.answers.group_by_month(:answer).count %>
+          </div>
+        </div>
+      <% else %>
+        <%= link_to 'see answers', answers_of_field_form_path(@form.id, field_id: field.id), class:"btn btn-warning p-1" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

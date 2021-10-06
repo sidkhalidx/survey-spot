@@ -1,4 +1,5 @@
 <h3>Editing <%= @user.role %>: <%= @user.username %></h3>
 <div class="container">
   <%= render 'form' %>
+  <%= link_to 'edit password', password_user_path(@user), class:"btn btn-danger p-1 mt-2" %>
 </div>

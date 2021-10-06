@@ -6,6 +6,7 @@ class FormSubmissionsController < ApplicationController
   
   def index
     @form_submissions = FormSubmission.where(form_id: params[:form_id])
+    @form = Form.find(params[:form_id])
     authorize FormSubmission
   end
   def new
@@ -43,7 +44,7 @@ class FormSubmissionsController < ApplicationController
 
   def email_form
     @email = params[:email]
-    render 'something_wrong' if @form.form_type="email_form" && @email.blank?
+    render 'something_wrong' if @form.form_type=="email_form" && @email.blank?
     @form_submission=FormSubmission.where(form_id: @form.id, email: @email )
   end
 end
