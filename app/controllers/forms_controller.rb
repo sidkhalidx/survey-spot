@@ -1,37 +1,42 @@
 class FormsController < ApplicationController
+    before_action :get_organization, only: [:index, :new, :create]
+    before_action :get_form_after_organization, only: [:edit, :update, :emails, :result, :answers, :destroy]
 
+    def get_form_after_organization
+        @form = Form.find(params[:id])
+    end
+    def get_organization
+        @organization = current_user.organization
+    end
     def index
         authorize Form
-        @organization = current_user.organization
         @forms = Form.search(@organization.id, params[:search]).paginate(page: params[:page], per_page: 3)
     end
 
     def new
-        @organization = current_user.organization
         @form = @organization.forms.build
         authorize @form
     end
 
     def create
-        @organization = current_user.organization
         @form = @organization.forms.build(form_params)
-        @form.save
-        redirect_to forms_path
+        if @form.save
+            redirect_to forms_path
+        else
+            render 'new'
+        end
     end
     
     def edit
-        @form = Form.find(params[:id])
         authorize @form
     end
 
     def update
-        @form = Form.find(params[:id])
         @form.update(form_params)
     end
 
     def emails
         authorize Form
-        @form = Form.find(params[:id])
         @to_emails = EndUser.where(form_id: params[:id])
         @to_emails = Form.search_emails(@form, params[:search])
     end
@@ -47,10 +52,8 @@ class FormsController < ApplicationController
     end
     def result
         @form_submissions = FormSubmission.where(form_id: params[:form_id])
-        @form = Form.find(params[:id])
     end
     def answers
-        @form = Form.find(params[:id])
         @field = Field.find(params[:field_id])
         @answers = @field.answers
     end
@@ -66,7 +69,6 @@ class FormsController < ApplicationController
         params.require(:form).permit(:title, :form_type, :search, fields_attributes: [:id, :field_type, :title, :is_required, :_destroy, field_options_attributes: [:id, :label, :_destroy]])
     end
     def destroy
-        @form = Form.find(params[:id])
         authorize @form
         @form.destroy
         redirect_to request.referrer
