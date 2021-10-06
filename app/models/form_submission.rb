@@ -27,9 +27,9 @@ class FormSubmission < ApplicationRecord
         field_answers = get_answers(field)
         if field.field_type=="CheckBox"
           error=multi_answer_error(field_answers)
-          self.errors.add(:answer, message:"field is empty") if error
+          self.errors.add(:base, message:"field is empty") if error
         else
-          self.errors.add(:answer, message:"field is empty") if field_answers[0].answer.blank?
+          self.errors.add(:base, message:"#{field.title}: field is empty") if field_answers[0].answer.blank?
         end
       end
     end

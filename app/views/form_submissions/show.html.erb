@@ -4,7 +4,11 @@
   </div>
   <div class="p-2 border">
     <% field.answers.where(form_submission_id: @form_submission.id).each do |answer| %>
-      <%= answer.answer %><br/>
+      <% if field.field_type=="FileField" %>
+        <%= link_to answer.images.filename, rails_blob_path(answer.images, disposition: 'preview' ) %>
+      <% else %>
+        <%= answer.answer %><br/>
+      <% end %>
     <% end %>
   </div>
 <% end %>

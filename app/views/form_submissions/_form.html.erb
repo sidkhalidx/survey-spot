@@ -1,4 +1,9 @@
 <%= form_with model: [@form, @form_submission], class:"mt-4" do |f| %>
+  <% if @form_submission.errors %>
+    <% @form_submission.errors.full_messages.each do |error| %>
+      <p class="text-danger bg-dark"><%= error %></p>
+    <% end %>
+  <% end %>
   <div class="header">
     <h3><%= @form.title %></h3>
   </div>

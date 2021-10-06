@@ -16,6 +16,7 @@ class FormsController < ApplicationController
         @organization = current_user.organization
         @form = @organization.forms.build(form_params)
         @form.save
+        redirect_to forms_path
     end
     
     def edit
@@ -44,6 +45,10 @@ class FormsController < ApplicationController
             send_email(email_f, params[:id])
         end
     end
+    def result
+        @form_submissions = FormSubmission.where(form_id: params[:form_id])
+        @form = Form.find(params[:id])
+    end
     def answers
         @form = Form.find(params[:id])
         @field = Field.find(params[:field_id])
@@ -64,5 +69,6 @@ class FormsController < ApplicationController
         @form = Form.find(params[:id])
         authorize @form
         @form.destroy
+        redirect_to request.referrer
     end
 end

@@ -1,4 +1,9 @@
 <%= form_with model: @form, class:"mt-5", local: false do |f| %>
+  <% if @form.errors %>
+    <% @form.errors.each do |error| %>
+      <%= error %>
+    <% end %>
+  <% end %>
   <%= f.label :title_of_form, params[:name] %>
   <%= f.text_field :title %>
   <br/>

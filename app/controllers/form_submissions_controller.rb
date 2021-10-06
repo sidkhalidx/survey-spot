@@ -5,7 +5,7 @@ class FormSubmissionsController < ApplicationController
 
   
   def index
-    @form_submissions = FormSubmission.where(form_id: params[:form_id])
+    @form_submissions = FormSubmission.where(form_id: params[:form_id]).paginate(page: params[:page], per_page: 6)
     @form = Form.find(params[:form_id])
     authorize FormSubmission
   end
@@ -19,7 +19,11 @@ class FormSubmissionsController < ApplicationController
   end
   def create
     @form_submission = @form.form_submissions.build(form_submission_params)
-    @form_submission.save
+    if @form_submission.save
+      redirect_to request.referrer
+    else
+      render 'new'
+    end
   end
   def show
     @form_submission = FormSubmission.find(params[:id])

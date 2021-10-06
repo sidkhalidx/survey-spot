@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get 'emails'
       post 'post_send_emails'
       post 'resend_email'
+      get 'result'
       get 'field/:field_id/answers', to: 'forms#answers', as: 'answers_of_field'
     end
     resources :form_submissions do
