@@ -4,7 +4,9 @@
 <% else %>
     <% action = user_path(@user) %>
 <% end %>
-<%= form_with model: @user, url: action, local: false do |user| %>
+<%= render 'layouts/flash_messages' %>
+<%= render 'layouts/error_messages', obj: @user %>
+<%= form_with model: @user, url: action, local: true do |user| %>
   <%= user.label :username %>
   <%= user.text_field :username, class:"form-control" %>
   <%= user.label :email %>

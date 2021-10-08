@@ -1,4 +1,4 @@
-<ul class="nav flex-column">
+<ul class="nav flex-column h-100 sticky-top bg-light" style="height: 100vh">
   <% if user_signed_in? && current_user.super_admin? %>
     <li class="nav-item border">
       <%= link_to 'Organizations', user_organizations_path(current_user), class:"nav-link" %>

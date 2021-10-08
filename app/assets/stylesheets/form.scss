@@ -1,0 +1,27 @@
+.body {
+  margin:0;
+  padding:0;
+}
+
+.navbar-right{
+  position: fixed;
+  right: 0;
+  text-align: center;
+}
+
+.form-toolbar{
+  position: relative;
+}
+.toolbar{
+  position: fixed;
+  right: 0;
+  // min-width: 200px;
+  height: 100%;
+}
+#add_fields{
+  margin-top: -100%;
+}
+.toolbar-item{
+  color: black;
+  padding: 30px 50px !important; 
+}

@@ -25,8 +25,6 @@ class FormsController < ApplicationController
             flash[:success] = "#{@form.title} Survey created"
             redirect_to forms_path
         else
-            p @form.errors.any?
-            p '*' * 1000
             render 'new'
         end
     end

@@ -1,12 +1,5 @@
 <div class="container">
-  <% flash.each do |type, msg| %>
-    <div class="alert alert-<%=type%> alert-dismissible fade show" role="alert">
-      <div>
-        <p class="m-0"><%=msg%></p>
-      </div>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% end %>
+  <%= render 'layouts/flash_messages' %>
 <div>
 <div class="row">
   <div class="col-6">
@@ -25,8 +18,6 @@
     <% end %>
   </div>
 </div>
-
-
 <table class="table">
   <thead>
     <tr>

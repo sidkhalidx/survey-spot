@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'password/', to: 'users#password'
+      post 'post_password/', to: 'users#post_password'
     end
     resources :organizations
   end
@@ -24,9 +25,9 @@ Rails.application.routes.draw do
       get 'field/:field_id/answers', to: 'forms#answers', as: 'answers_of_field'
     end
     resources :form_submissions do
-      # collection do
-      #   get 'answers', to: 'form_submissions#answers'
-      # end
+      collection do
+        get 'submitted', to: 'form_submissions#submitted'
+      end
     end
   end
   # get 'forms/:id'

@@ -1,26 +1,47 @@
-<div class="container">
-  <%= form_with model: @form, class:"mt-5", local: true do |f| %>
-    <% if @form.errors %>
-      <% @form.errors.full_messages.each do |error| %>
-        <p class="text-danger border border-3 rounded  text-warning p-2"><strong><%= error %></strong></p>
-      <% end %>
-    <% end %>
-    <fieldset>
-      <legend>Title For form</legend>
-      <%= f.text_field :title, class:"form-control" %>
-    </fieldset>
+<%= form_with model: @form, class:"mt-0", local: true do |f| %>
+  <%= render 'layouts/error_messages', obj: @form %>
+  <div class="form-toolbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light toolbar rounded flex-column">
+      <a class="navbar-brand" href="#">Tools</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toolbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="toolbar">
+        <ul class="navbar-nav flex-column p-0" id="add_fields">
+          <li class="nav-item border"><%= link_to_add_association 'Text Field', f, :fields, render_options: { locals: { field_type: 'TextField'} }, class:"nav-link toolbar-item" %></li>
+          <li class="nav-item border"><%= link_to_add_association 'Text Area', f, :fields, render_options: { locals: { field_type: 'TextArea'} }, class:"nav-link toolbar-item" %></li>
+          <li class="nav-item border"><%= link_to_add_association 'Radio Field', f, :fields, render_options: { locals: { field_type: 'Radio'} }, class:"nav-link toolbar-item" %></li>
+          <li class="nav-item border"><%= link_to_add_association 'CheckBox Field', f, :fields, render_options: { locals: { field_type: 'CheckBox'} }, class:"nav-link toolbar-item" %></li>
+          <li class="nav-item border"><%= link_to_add_association 'Date Field', f, :fields, render_options: { locals: { field_type: 'DateField'} }, class:"nav-link toolbar-item" %></li>
+          <li class="nav-item border"><%= link_to_add_association 'File Field', f, :fields, render_options: { locals: { field_type: 'FileField'} }, class:"nav-link toolbar-item" %></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="form-section">
+    </div>
+  </div>
 
-    <br/>
-    <%= f.select :form_type, options_for_select([["Public", "public_form"], ["Email", "email_form"]], f.object.form_type), selected: f.object.form_type || "select" %>
-    <%= f.fields_for :fields do |field| %>
-      <%= render 'field_fields', f:field %>
-    <% end %>
-    <div class="links">
-      <div class="d-flex justify-content-end" id="add_field_button" >
-        <%= link_to_add_association 'add field', f, :fields,
-            id:"add_field", class:"btn btn-primary m-2" %>
+
+
+  <div class="row col-8">
+    <div>
+    
+      <legend class="m-0">Title For form</legend>
+      <%= f.text_field :title, class:"form-control", placeholder:"Title For Form" %>
+      <legend class="mt-1 mb-0">Select Form Type</legend>
+      <%= f.select :form_type, options_for_select([["Public Form", "public_form"], ["Email Form", "email_form"]], f.object.form_type), { selected: f.object.form_type || "select" }, { class:"form-select" } %>
+      <div class="links" id="form_fields">
+
       </div>
     </div>
-    <%= f.submit class: "btn btn-success" %>
+  </div>
+  
+  <%= f.fields_for :fields do |field| %>
+    <%= render 'field_fields', f:field, field_type: field.object.field_type %>
   <% end %>
-</div>
+  <div class="links">
+    <div class="d-flex justify-content-end" id="add_field_button" >
+    </div>
+  </div>
+  <%= f.submit class: "btn btn-success mt-2" %>
+<% end %>

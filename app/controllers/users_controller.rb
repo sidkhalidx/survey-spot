@@ -20,17 +20,44 @@ class UsersController < ApplicationController
   def password
     @user = User.find(params[:id])
   end
+  def post_password
+    passwords = user_password_params
+    if passwords[:password] == passwords[:password_confirmation]
+      @user = User.find(params[:id])
+      if @user.update(user_password_params)
+        flash[:success]="Password has been updated successfully"
+        redirect_to password_user_path(@user)
+      else
+        flash.now[:alert]="Password not updated"
+        render 'password'
+      end
+    end
+  end
+  def show
+    @user = User.find(params[:id])
+  end
   def create
     @password = Random.rand(111111...999999)
     @user.password = @password
     if @user.save
+      flash[:success]="User #{@user.username} created sucessfully!"
       UserMailer.with(user: @user, password: @password).send_credentials.deliver_later
+    else
+      flash.now[:danger]="User not created!"
+      render 'manager' if @user.manager?
+      render 'admin' if @user.admin?
     end
   end
   def update
+    byebug
     @user = User.find(params[:id])
-    @user.update(user_params)
-    redirect_to request.referrer
+    if @user.update(user_params)
+      flash[:success]="User #{@user.username} updated successfully"
+      redirect_to request.referrer
+    else
+      flash.now[:alert]="User not updated!"
+      render 'edit'
+    end
   end
   def destroy
     @user = User.find(params[:id])
@@ -47,7 +74,10 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+    params.require(:user).permit(:username, :email)
+  end
+  def user_password_params
+    params.require(:user).permit(:password, :password_confirmation)
   end
   def check_user
     @user = User.find(params[:id])

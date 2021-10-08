@@ -11,6 +11,7 @@ class OrganizationsController < ApplicationController
     @organization = current_user.organizations.build(organization_params)
     @organization.admins[0].role="admin"
     @password = @organization.admins[0].password
+    byebug
     if @organization.save
       UserMailer.with(user: @organization.admins[0], password: @password).send_credentials.deliver_later
       redirect_to user_organizations_path

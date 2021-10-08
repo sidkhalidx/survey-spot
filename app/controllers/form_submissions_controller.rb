@@ -20,16 +20,18 @@ class FormSubmissionsController < ApplicationController
   def create
     @form_submission = @form.form_submissions.build(form_submission_params)
     if @form_submission.save
-      redirect_to request.referrer
+      redirect_to submitted_form_form_submissions_path
     else
       render 'new'
     end
   end
   def show
     @form_submission = FormSubmission.find(params[:id])
+    # byebug
     authorize FormSubmission
   end
-
+  def submitted
+  end
 
 
   def something_wrong
