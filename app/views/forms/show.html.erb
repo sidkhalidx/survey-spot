@@ -1,0 +1,17 @@
+<h2>Survey <span class="text-danger"><%=@form.title%></span></h2>
+<% @form.fields.each do |field| %>
+
+  <div class='row'>
+    <div class="col-auto">
+      <h4><%= field.title %></h4>
+    </div>
+    <div class="col">
+      <span><%= field.field_type %></span>
+    </div>
+  </div>
+  <% if field.field_options.try(:any?) %>
+    <% field.field_options.each do |option| %>
+      <p><%= option.label %><p>
+    <% end %>
+  <% end %>
+<% end %>

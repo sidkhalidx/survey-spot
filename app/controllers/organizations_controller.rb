@@ -13,10 +13,11 @@ class OrganizationsController < ApplicationController
     @password = @organization.admins[0].password
     if @organization.save
       UserMailer.with(user: @organization.admins[0], password: @password).send_credentials.deliver_later
+      redirect_to user_organizations_path
     else
       render 'new'
     end
-    redirect_to user_organizations_path
+    
   end
   def show
     @organization = Organization.find(params[:id])

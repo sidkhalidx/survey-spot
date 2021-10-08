@@ -1,6 +1,6 @@
 class FormsController < ApplicationController
-    before_action :get_organization, only: [:index, :new, :create]
-    before_action :get_form_after_organization, only: [:edit, :update, :emails, :result, :answers, :destroy]
+    before_action :get_organization, only: [:index, :new, :create, :show]
+    before_action :get_form_after_organization, only: [:edit, :update, :emails, :result, :answers, :destroy, :show]
 
     def get_form_after_organization
         @form = Form.find(params[:id])
@@ -21,8 +21,12 @@ class FormsController < ApplicationController
     def create
         @form = @organization.forms.build(form_params)
         if @form.save
+            flash[:success] = "#{@form.title} Survey created"
+            flash[:success] = "#{@form.title} Survey created"
             redirect_to forms_path
         else
+            p @form.errors.any?
+            p '*' * 1000
             render 'new'
         end
     end
@@ -32,9 +36,15 @@ class FormsController < ApplicationController
     end
 
     def update
-        @form.update(form_params)
+        if @form.update(form_params)
+            redirect_to form_path(@form)
+        else
+            render "edit"
+        end
     end
-
+    def show
+        # byebug
+    end
     def emails
         authorize Form
         @to_emails = EndUser.where(form_id: params[:id])

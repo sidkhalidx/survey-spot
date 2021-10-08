@@ -31,6 +31,9 @@ document.addEventListener('turbolinks:load', ()=>{
         resend_email[i].addEventListener('click', resendEmail, false)
     }
 
+    $('.alert').delay(2000).slideUp(2000, ()=>{
+        $(this).close()
+    })
     function all_field_type_setting(){
         p = document.getElementsByClassName('nested-fields')
         p.forEach((node, index, array)=>{

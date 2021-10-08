@@ -7,7 +7,14 @@ class Form < ApplicationRecord
     accepts_nested_attributes_for :fields, allow_destroy: true
     accepts_nested_attributes_for :end_users
     has_many :form_submissions, dependent: :destroy
-    
+    validate :unique_field_names
+    def unique_field_names
+        self.fields.group_by{|f| f.title}.each do |key, value|
+            if value.count > 1
+                self.errors.add(:base, message:"field names cant be same")
+            end
+        end
+    end
     def self.search(organization, search)
         if search
             Form.where(organization_id: organization).where("title LIKE ?", "%"+search+"%")

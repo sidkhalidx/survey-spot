@@ -1,21 +1,26 @@
-<%= form_with model: @form, class:"mt-5", local: false do |f| %>
-  <% if @form.errors %>
-    <% @form.errors.each do |error| %>
-      <%= error %>
+<div class="container">
+  <%= form_with model: @form, class:"mt-5", local: true do |f| %>
+    <% if @form.errors %>
+      <% @form.errors.full_messages.each do |error| %>
+        <p class="text-danger border border-3 rounded  text-warning p-2"><strong><%= error %></strong></p>
+      <% end %>
     <% end %>
-  <% end %>
-  <%= f.label :title_of_form, params[:name] %>
-  <%= f.text_field :title %>
-  <br/>
-  <%= f.select :form_type, options_for_select([["Public", "public_form"], ["Email", "email_form"]], f.object.form_type), selected: f.object.form_type || "select" %>
-  <%= f.fields_for :fields do |field| %>
-    <%= render 'field_fields', f:field %>
-  <% end %>
-  <div class="links">
-    <div class="d-flex justify-content-end" id="add_field_button" >
-      <%= link_to_add_association 'add field', f, :fields,
-          id:"add_field", class:"btn btn-primary m-2" %>
+    <fieldset>
+      <legend>Title For form</legend>
+      <%= f.text_field :title, class:"form-control" %>
+    </fieldset>
+
+    <br/>
+    <%= f.select :form_type, options_for_select([["Public", "public_form"], ["Email", "email_form"]], f.object.form_type), selected: f.object.form_type || "select" %>
+    <%= f.fields_for :fields do |field| %>
+      <%= render 'field_fields', f:field %>
+    <% end %>
+    <div class="links">
+      <div class="d-flex justify-content-end" id="add_field_button" >
+        <%= link_to_add_association 'add field', f, :fields,
+            id:"add_field", class:"btn btn-primary m-2" %>
+      </div>
     </div>
-  </div>
-  <%= f.submit 'Create From', class: "btn btn-success" %>
-<% end %>
+    <%= f.submit class: "btn btn-success" %>
+  <% end %>
+</div>

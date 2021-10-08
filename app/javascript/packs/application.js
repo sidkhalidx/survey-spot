@@ -9,6 +9,8 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "bootstrap"
 import "chartkick/chart.js"
+// import "toastr"
+require("toastr")
 require("jquery")
 require("@nathanvda/cocoon")
 
