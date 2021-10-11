@@ -13,17 +13,38 @@
     <%= f.hidden_field :field_type, value: field_type %>
     <div id="form_field">
       <%= f.label :question, class:"mt-1" %>
-      <%= f.text_field :title, class:"form-control", placeholder:"Enter your question here..." %>
+      <%= f.text_field :title, class:"form-control border border-success", placeholder:"Enter your question here..." %>
       <div class="mt-2">
         <%= f.check_box :is_required, class: 'form-check-input mt-1' %> <label class="form-check-label">Make this field required</label>
       </div>
+      
+      <% if field_type=="DateField" %>
+        <% min = get_min_date_constraint(f.object.field_options) %><% max = get_max_date_constraint(f.object.field_options) %>
+        
+        <div class="row">
+          <div class="col-6">
+            <%= f.fields_for :field_options, min do |field_options| %>
+              <%= field_options.label :Minimum_Date %>
+              <%= field_options.hidden_field :label, value: "Minimum" %>
+              <%= field_options.date_field :label_value, class:"form-control", value: min.try(:label_value).try(:to_date) %>
+            <% end %>
+          </div>
+          <div class="col-6">
+            <%= f.fields_for :field_options, max do |field_options| %>
+              <%= field_options.label :Maximum_Date %>
+              <%= field_options.hidden_field :label, value: "Maximum" %>
+              <%= field_options.date_field :label_value, value: max.try(:label_value).try(:to_date), class:"form-control" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
       <% if field_type=="Radio" || field_type=="CheckBox" %>
         <%= f.fields_for :field_options do |field_option| %>
           <%= render 'field_option_fields', f:field_option %>
         <% end %>
         <div class="links" id="form_field_option">
           <div class="d-flex flex-row-reverse">
-            <%= link_to_add_association 'Add Option', f, :field_options, class:"btn btn-primary mt-2"  %>
+            <%= link_to_add_association 'Add Option', f, :field_options, class:"btn btn-primary mt-2" %>
           </div>
         </div>
       <% end %>

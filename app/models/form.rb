@@ -8,6 +8,19 @@ class Form < ApplicationRecord
     accepts_nested_attributes_for :end_users
     has_many :form_submissions, dependent: :destroy
     validate :unique_field_names
+    validates :title, presence: true
+    validate :delete_unnecessary_fields
+    def delete_unnecessary_fields
+        self.fields.each do |field|
+            if field.field_type=="DateField"
+                field.field_options.each do |option|
+                    if option.label_value.blank?
+                        option.mark_for_destruction
+                    end
+                end
+            end
+        end
+    end
     def unique_field_names
         self.fields.group_by{|f| f.title}.each do |key, value|
             if value.count > 1

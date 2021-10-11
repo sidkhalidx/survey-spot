@@ -27,7 +27,6 @@ class FormSubmissionsController < ApplicationController
   end
   def show
     @form_submission = FormSubmission.find(params[:id])
-    # byebug
     authorize FormSubmission
   end
   def submitted

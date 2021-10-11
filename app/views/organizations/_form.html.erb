@@ -1,6 +1,8 @@
 <%= form_with model: [current_user, @organization], local: false do |org| %>
   <%= org.label :Name_of_organization %>
   <%= org.text_field :name, class:"form-control" %>
+  <%= org.label :Address %>
+  <%= org.text_field :address, class:"form-control" %>
   <br/>
   
   <% if params[:action]=='new' %>

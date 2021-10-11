@@ -1,23 +1,30 @@
-<h3>Sent mail to</h3>
 <div class="container">
+<h3>Send mails to</h3>
   <%= form_with model: @form.end_users.build, url:post_send_emails_form_path(@form) do |f| %>
     <%= f.label :Enter_comma_separated_emails %>
     <%= f.text_field :email, class:"form-control" %>
     <%= f.submit 'send', class:"btn btn-warning mt-2" %>
   <% end %>
-</div>
-<h3>Mail sent to</h3>
-<div class="container">
-  <%= form_tag emails_form_path, method: :get, class:"mb-2" do %>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag 'search', class:"btn btn-dark p-1" %>
-  <% end %>
-  <div class="border">
+  <div class="row mb-2">
+    <div class="col-6"><h3>Mail sent to</h3>
+    </div>
+    <div class="col-auto">
+        <%= form_tag emails_form_path, method: :get, class:"mb-2" do %>
+          <div class="input-group">
+            <%= text_field_tag :search, params[:search], class:"form-control" %>
+            <%= submit_tag 'search', class:"btn btn-dark p-1" %>
+          </div>
+        <% end %>
+    </div>
+  </div>
 
+
+  <div class="mt-5">
     <% @to_emails.each do |email| %>
       <div class="border-down m-2">
         <%= email.email %> <button class="btn btn-warning p-1 resend_email" data-email="<%= email.email %>" value="<%= @form.id %>">Resend</button>
       </div>
     <% end %>
   </div>
+  
 </div>

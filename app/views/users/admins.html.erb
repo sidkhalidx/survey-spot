@@ -17,7 +17,9 @@
         <tr class="shadow-sm mt-2">
           <td><%= admin.username %><% if admin.id==current_user.id %>(<%="me"%>)<% end %></td>
           <td><%= link_to 'Edit', edit_user_path(admin), class:"btn btn-warning nav-item" %></td>
-          <td><%= link_to 'Delete', user_path(admin), method: :delete, class:"btn btn-danger nav-item" %></td>
+          <% unless admin.id == current_user.id %>
+            <td><%= link_to 'Delete', user_path(admin), method: :delete, class:"btn btn-danger nav-item" %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

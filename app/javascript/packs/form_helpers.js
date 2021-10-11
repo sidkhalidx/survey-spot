@@ -1,7 +1,7 @@
 document.addEventListener('turbolinks:load', ()=>{
     form_fields = document.getElementById('form_fields')
     console.log(form_fields)
-    $('#add_fields a').data("association-insertion-node", '#form_fields')
+    $('#add_fields a').data("association-insertion-node", '#form_fields').data("association-insertion-method","prepend")
     var copy_links = document.getElementsByClassName('copy_link')
     var copylink = function(){
         navigator.clipboard.writeText(this.value)

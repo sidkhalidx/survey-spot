@@ -1,17 +1,12 @@
-<h2>Survey <span class="text-danger"><%=@form.title%></span></h2>
+<%= render 'layouts/flash_messages' %>
+<h2>Survey Name </h2><p class="border border-success rounded p-2"><%= @form.title %></p>
+<h2>Form Type </h2><p class="border border-success rounded p-2"><%= @form.form_type %></p>
 <% @form.fields.each do |field| %>
-
-  <div class='row'>
-    <div class="col-auto">
-      <h4><%= field.title %></h4>
+  <h2><%= field.field_type %> </h2><p class="border border-success rounded p-2"><%= field.title %></p>
+  <% field.field_options.each do |option| %>
+    <div class="container">
+      <p class="border border-success rounded p-2"><%= option.label %> <%= option.label_value unless option.label_value.blank? %> </p>
     </div>
-    <div class="col">
-      <span><%= field.field_type %></span>
-    </div>
-  </div>
-  <% if field.field_options.try(:any?) %>
-    <% field.field_options.each do |option| %>
-      <p><%= option.label %><p>
-    <% end %>
   <% end %>
 <% end %>
+<%= link_to 'Edit', edit_form_path(@form), class:"btn btn-warning" %>

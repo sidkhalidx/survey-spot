@@ -1,5 +1,5 @@
 <%= form_with model: @form, class:"mt-0", local: true do |f| %>
-  <%= render 'layouts/error_messages', obj: @form %>
+  
   <div class="form-toolbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light toolbar rounded flex-column">
       <a class="navbar-brand" href="#">Tools</a>
@@ -20,28 +20,22 @@
     <div class="form-section">
     </div>
   </div>
-
-
-
   <div class="row col-8">
     <div>
-    
+      <% @form.errors.full_messages.each do |error| %>
+        <p class="text-danger border border-3 rounded  text-warning p-2"><strong><%= error %></strong></p>
+      <% end %>
       <legend class="m-0">Title For form</legend>
       <%= f.text_field :title, class:"form-control", placeholder:"Title For Form" %>
       <legend class="mt-1 mb-0">Select Form Type</legend>
       <%= f.select :form_type, options_for_select([["Public Form", "public_form"], ["Email Form", "email_form"]], f.object.form_type), { selected: f.object.form_type || "select" }, { class:"form-select" } %>
+      <%= f.fields_for :fields do |field| %>
+        <%= render 'field_fields', f:field, field_type: field.object.field_type %>
+      <% end %>
       <div class="links" id="form_fields">
-
+        
       </div>
     </div>
   </div>
-  
-  <%= f.fields_for :fields do |field| %>
-    <%= render 'field_fields', f:field, field_type: field.object.field_type %>
-  <% end %>
-  <div class="links">
-    <div class="d-flex justify-content-end" id="add_field_button" >
-    </div>
-  </div>
-  <%= f.submit class: "btn btn-success mt-2" %>
+  <%= f.submit class: "btn btn-success mt-2 mb-2" %>
 <% end %>

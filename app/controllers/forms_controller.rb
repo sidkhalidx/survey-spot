@@ -22,7 +22,6 @@ class FormsController < ApplicationController
         @form = @organization.forms.build(form_params)
         if @form.save
             flash[:success] = "#{@form.title} Survey created"
-            flash[:success] = "#{@form.title} Survey created"
             redirect_to forms_path
         else
             render 'new'
@@ -35,13 +34,13 @@ class FormsController < ApplicationController
 
     def update
         if @form.update(form_params)
+            flash[:success] = "#{@form.title} Survey updated successfully"
             redirect_to form_path(@form)
         else
             render "edit"
         end
     end
     def show
-        # byebug
     end
     def emails
         authorize Form
@@ -74,11 +73,13 @@ class FormsController < ApplicationController
         UserMailer.with(email: email.strip, form_id: form_id).send_email_form.deliver_later
     end
     def form_params
-        params.require(:form).permit(:title, :form_type, :search, fields_attributes: [:id, :field_type, :title, :is_required, :_destroy, field_options_attributes: [:id, :label, :_destroy]])
+        params.require(:form).permit(:title, :form_type, :search, fields_attributes: [:id, :field_type, :title, :is_required, :_destroy, field_options_attributes: [:id, :label, :_destroy, :label_value]])
     end
     def destroy
         authorize @form
+        name = @form.title
         @form.destroy
+        flash[:success]="Survey (#{name}) deleted successfully"
         redirect_to request.referrer
     end
 end

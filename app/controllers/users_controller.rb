@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   before_action :user_with_role, only: [:create]
   before_action :check_user, only: [:edit, :password]
+  before_action :edit_password, only:[:password]
+  def edit_password
+    flash[:alert]="Not authorized!"
+    redirect_to (request.referrer || root_path) unless current_user.id==@user.id
+  end
   def managers
     @managers = current_user.organization.managers
     authorize User
@@ -39,9 +44,11 @@ class UsersController < ApplicationController
   def create
     @password = Random.rand(111111...999999)
     @user.password = @password
+    byebug
     if @user.save
       flash[:success]="User #{@user.username} created sucessfully!"
       UserMailer.with(user: @user, password: @password).send_credentials.deliver_later
+      redirect_to user_path(@user)
     else
       flash.now[:danger]="User not created!"
       render 'manager' if @user.manager?
@@ -49,7 +56,6 @@ class UsersController < ApplicationController
     end
   end
   def update
-    byebug
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success]="User #{@user.username} updated successfully"
