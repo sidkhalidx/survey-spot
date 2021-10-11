@@ -17,7 +17,7 @@
       <div class="mt-2">
         <%= f.check_box :is_required, class: 'form-check-input mt-1' %> <label class="form-check-label">Make this field required</label>
       </div>
-      
+
       <% if field_type=="DateField" %>
         <% min = get_min_date_constraint(f.object.field_options) %><% max = get_max_date_constraint(f.object.field_options) %>
         

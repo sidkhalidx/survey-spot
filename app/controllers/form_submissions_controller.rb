@@ -41,7 +41,7 @@ class FormSubmissionsController < ApplicationController
     @form_submission.update(form_submission_params)
   end
   def form_submission_params
-    params.require(:form_submission).permit(:id, :email, answers_attributes: [:id, :field_id, :answer, :images])
+    params.require(:form_submission).permit(:id, :email, answers_attributes: [:id, :field_id, :answer, images:[] ])
   end
   def find_form
     @form = Form.find(params[:form_id])

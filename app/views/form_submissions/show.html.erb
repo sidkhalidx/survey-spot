@@ -5,7 +5,10 @@
   <div class="p-2 border">
     <% field.answers.where(form_submission_id: @form_submission.id).each do |answer| %>
       <% if field.field_type=="FileField" %>
-        <%= link_to answer.images.filename, rails_blob_path(answer.images, disposition: 'preview' ) %>  <%= image_tag(answer.images, height: '25') %>
+        <% answer.images.each do |image| %>
+          <%= link_to image.filename, rails_blob_path(image, disposition: 'preview' ) %>  <%= image_tag(image, height: '25') %>
+          <br/>
+        <% end %>
       <% else %>
         <%= answer.answer %><br/>
       <% end %>

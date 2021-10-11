@@ -3,7 +3,17 @@
 <% @answers.each do |answer| %>
   <div class="border m-2 p-2">
     <% if @field.field_type=="FileField" %>
-      <%= link_to answer.images.filename, rails_blob_path(answer.images, disposition: 'preview' ) %>
+      <% answer.images.each do |image| %>
+        <div class="row">
+          <div class="col-3">
+            <%= link_to image.filename, rails_blob_path(image, disposition: 'preview' ) %>
+          </div>
+          <div class="col-auto border p-1">
+            <%= image_tag(image, height: '25') %>
+          </div>
+        </div>
+        <br/>
+        <% end %>
     <% else %>
       <%= answer.answer %>
     <% end %>
