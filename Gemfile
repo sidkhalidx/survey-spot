@@ -18,6 +18,7 @@ gem 'will_paginate-bootstrap4'
 gem 'chartkick', '~> 4.0', '>= 4.0.5'
 gem 'groupdate'
 gem 'toastr-rails'
+gem 'figaro'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker

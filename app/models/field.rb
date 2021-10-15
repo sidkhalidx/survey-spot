@@ -1,6 +1,6 @@
 class Field < ApplicationRecord
   belongs_to :form
-  validates :title, uniqueness: { scope: :form_id }
+  validates :title, uniqueness: { scope: :form_id, message: "*Field name is already taken" }
   has_many :field_options, dependent: :destroy
   has_many :answers, dependent: :destroy
   accepts_nested_attributes_for :answers

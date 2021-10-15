@@ -1,0 +1,13 @@
+<div class="container-fluid bg-white border p-4 rounded mt-3">
+  <h2>Admin's Info</h2>
+  <% @organization.admins.each do |admin| %>
+    <div class="row">
+      <div class="col-1">
+        <h5>Admin: </h5>
+      </div>
+      <div class="col">
+        <%= admin.username %>
+      </div>
+    </div>
+  <% end %>
+</div>

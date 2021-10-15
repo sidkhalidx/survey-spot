@@ -1,0 +1,29 @@
+<div class="container-fluid bg-white border p-4 rounded mt-3">
+  <div class="row">
+    <div class="col">
+      <h2>Organization Info</h2>
+    </div>
+    <div class="col">
+      <div class="d-flex flex-row-reverse">
+        <%= link_to 'Delete', user_organization_path(current_user, @organization), method: :delete, data: { confirm: 'Are you sure' }, class:"btn btn-danger mx-2 px-2" %><%= link_to 'Edit', edit_user_organization_path(current_user, @organization), class:"btn btn-warning mx-2 px-2" %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-1">
+      <h5>Name: </h5>
+    </div>
+    <div class="col">
+      <%= @organization.name %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <h5>Address: </h5>
+    </div>
+    <div class="col">
+      <%= @organization.address || "--- Not Available ---" %>
+    </div>
+  </div>
+</div>

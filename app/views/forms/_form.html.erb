@@ -20,12 +20,12 @@
     <div class="form-section">
     </div>
   </div>
-  <div class="row col-8">
+  <div class="row col-8 mt-2">
     <div>
-      <% @form.errors.full_messages.each do |error| %>
-        <p class="text-danger border border-3 rounded  text-warning p-2"><strong><%= error %></strong></p>
+      <% if @form.errors.any? %>
+        <p class="text-danger border border-3 rounded  text-warning p-2"><strong>Remove Errors to proceed ! </strong></p>
       <% end %>
-      <legend class="m-0">Title For form</legend>
+      <legend class="m-0">Title For Form</legend>
       <%= f.text_field :title, class:"form-control", placeholder:"Title For Form" %>
       <legend class="mt-1 mb-0">Select Form Type</legend>
       <%= f.select :form_type, options_for_select([["Public Form", "public_form"], ["Email Form", "email_form"]], f.object.form_type), { selected: f.object.form_type || "select" }, { class:"form-select" } %>

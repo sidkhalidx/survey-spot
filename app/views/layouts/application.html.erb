@@ -5,21 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="bg-light">
     <%= render 'layouts/navigbar' %>
-    <div class="row m-0">
-      <div class="col-2 p-0">
-        <%= render 'layouts/home' %>
+    <% if user_signed_in? %>
+      <div class="row m-0">
+        <div class="col-2 p-0" style="height: 94vh">
+          <%= render 'layouts/home' %>
+        </div>
+        <div class="col-10">
+          <%= yield %>
+        </div>
       </div>
-      <div class="col-10">
-        <%= yield %>
+    <% else %>
+      <div>
+        <center>
+          <%= yield %>
+        </center>
       </div>
-    </div>
-    
+    <% end %>
   </body>
 </html>

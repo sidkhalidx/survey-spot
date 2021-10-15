@@ -1,12 +1,10 @@
-<div class="container">
-  <%= link_to 'All Organizations', user_organizations_path(current_user, @organization), class:"btn btn-dark m-2" %>
-  <h2>Name: </h2><p class="border border-success rounded p-2"><%= @organization.name %></p>
-  <h2>Address: </h2><p class="border border-success rounded p-2"><%= @organization.address || "--- Not Available ---" %></p>
+<%= render 'layouts/flash_messages' %>
+<div class="container mt-3">
+  <div class="container-fluid bg-white border p-4 rounded">
+    <h2>Admin's Dashboard</h2>
+    <hr>
+  </div>
+  <%= render 'organization_info' %>
+  <%= render 'admins_info' %>
   <br/>
-  <center>
-    <h2>Admins</h2>
-  </center>
-  <% @organization.admins.each do |admin| %>
-    <h3>Username</h3><p class="border border-success rounded p-2"><%= admin.username %></p>
-  <% end %>
 </div>

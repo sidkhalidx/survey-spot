@@ -5,12 +5,11 @@
 <%= f.fields_for :answers, temp do |a| %>
   <%= a.hidden_field :field_id, value: field.id %>
   <%= a.hidden_field :answer, value: 'its_a_file_field' %>
-  <%= a.file_field :images, class:"form-control", multiple: true %>
+  <%= a.file_field :images, class:"form-control", multiple: get_multiple_file_field_option_answer(field), accept: get_accept_of_file_field(field) %>
   <% if temp.images.attached? %>
     <% temp.images.each do |image| %>
-      <%= link_to image.filename, rails_blob_path(iamge, disposition: 'preview' ) %>
+      <%= link_to image.filename, rails_blob_path(image, disposition: 'preview' ) %>
     <% end %>
-    
   <% else %>
     <p>No file given</p>
   <% end %>

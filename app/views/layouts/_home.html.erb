@@ -1,21 +1,21 @@
-<ul class="nav flex-column h-100 sticky-top bg-light" style="height: 100vh">
+<ul class="nav flex-column h-100 bg-white text-white border-end" style="position: fixed; min-width:200px" >
   <% if user_signed_in? && current_user.super_admin? %>
-    <li class="nav-item border">
-      <%= link_to 'Organizations', user_organizations_path(current_user), class:"nav-link" %>
+    <li class="nav-item">
+      <%= link_to 'Organizations', user_organizations_path(current_user), class:"nav-link p-3 border-bottom text-center text-dark" %>
     </li>
   <% elsif user_signed_in? && current_user.admin? %>
-    <li class="nav-item border">
-      <%= link_to 'Surveys', forms_path, class:"nav-link" %>
+    <li class="nav-item ">
+      <%= link_to 'Surveys', forms_path, class:"nav-link p-4 border-bottom text-center" %>
     </li>
-    <li class="nav-item border">
-      <%= link_to 'Managers', managers_users_path, class:"nav-link" %>
+    <li class="nav-item ">
+      <%= link_to 'Managers', managers_users_path, class:"nav-link p-4 border-bottom text-center" %>
     </li>
-    <li class="nav-item border">
-      <%= link_to 'Admins', admins_users_path, class:"nav-link" %>
+    <li class="nav-item ">
+      <%= link_to 'Admins', admins_users_path, class:"nav-link p-4 border-bottom text-center" %>
     </li>
   <% elsif user_signed_in? && current_user.manager? %>
-    <li class="nav-item border">
-      <%= link_to 'Surveys', forms_path, class:"nav-link" %>
+    <li class="nav-item ">
+      <%= link_to 'Surveys', forms_path, class:"nav-link p-4 border-bottom text-center" %>
     </li>
   <% end %>
 </ul>

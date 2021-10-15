@@ -23,8 +23,12 @@ class Form < ApplicationRecord
     end
     def unique_field_names
         self.fields.group_by{|f| f.title}.each do |key, value|
+            # byebug
             if value.count > 1
-                self.errors.add(:base, message:"field names cant be same")
+                value.each do |field|
+                    field.errors.add(:base, message:"*Field names cant be same")
+                end
+                self.errors.add(:base, message:"*Field names cant be same")
             end
         end
     end

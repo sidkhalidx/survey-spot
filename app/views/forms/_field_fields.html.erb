@@ -1,5 +1,16 @@
-<div class="nested-fields mt-4">
-  <div class="container-fluid border border-dark rounded p-3 m-2">
+<div class="nested-fields mt-4 bg-white">
+  <% color = "dark" %>
+  <% if f.object.errors.any? %>
+    <% color = "danger" %>
+    <div class="px-3">
+      <% f.object.errors.messages.values.each do |message| %>
+        <% message.each do |msg| %>
+          <p class="text-danger mb-0"><%=msg%></p>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="container-fluid border border-<%=color%> rounded p-3 m-2" style="margin-top: 0 !important">
     <div class="row m-0">
       <div class="col-6">
         <span class="text-success"><%= field_type %></span>
@@ -17,10 +28,25 @@
       <div class="mt-2">
         <%= f.check_box :is_required, class: 'form-check-input mt-1' %> <label class="form-check-label">Make this field required</label>
       </div>
-
+      
+      <% if field_type=="FileField" %>
+        <div class="row">
+          <div class="col-6">
+            <%= f.fields_for :field_options, get_multiple_file_field_option(f.object.field_options) do |field_options| %>
+              <%= field_options.hidden_field :label, value: "multiple" %>
+              <%= field_options.check_box :label_value, class: "form-check-input mt-1" %> <label class="form-check-label">Allow multiple uploads</label>
+            <% end %>
+          </div>
+          <div class="col-6">
+            <%= f.fields_for :field_options, get_type_of_file_field_option(f.object.field_options) do |field_options| %>
+              <%= field_options.hidden_field :label, value: "accept" %>
+              <%= field_options.select :label_value, options_for_select([["Anything", ""],["Images", "image/*"], ["Pdf", ".pdf"]], field_options.object.label_value), { selected: field_options.object.label_value || "select" }, { class:"form-select" } %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
       <% if field_type=="DateField" %>
         <% min = get_min_date_constraint(f.object.field_options) %><% max = get_max_date_constraint(f.object.field_options) %>
-        
         <div class="row">
           <div class="col-6">
             <%= f.fields_for :field_options, min do |field_options| %>

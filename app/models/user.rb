@@ -7,9 +7,11 @@ class User < ApplicationRecord
   enum role: [:super_admin, :admin, :manager, :end_user]
   devise :database_authenticatable,# :registerable,
          :recoverable, :rememberable, :validatable, authentication_keys: [:username]
-  validates :username, uniqueness: true
-  validates :email, uniqueness: true
-  validates :password, confirmation: true
+  validates :username, uniqueness: { message: "Username already taken" }
+  validates :username, presence: { message: "Username cant be blank" }
+  validates :email, uniqueness: { message: "Email already taken" }
+  validates :email, presence: { message: "Email cant be blank" }
+  validates :password, confirmation: true 
   def email_required?
     false
   end

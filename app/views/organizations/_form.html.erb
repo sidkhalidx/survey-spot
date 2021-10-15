@@ -1,23 +1,62 @@
-<%= form_with model: [current_user, @organization], local: false do |org| %>
-  <%= org.label :Name_of_organization %>
-  <%= org.text_field :name, class:"form-control" %>
-  <%= org.label :Address %>
-  <%= org.text_field :address, class:"form-control" %>
-  <br/>
-  
-  <% if params[:action]=='new' %>
-    <h3>Create admin for this organization</h3>
-    <%= org.fields_for :admins, @organization.admins.build do |admin| %>
-      <%= admin.label :username %>
-      <%= admin.text_field :username, class:"form-control" %>
-      <%= admin.label :email %>
-      <%= admin.email_field :email, class:"form-control" %>
-      <%= admin.hidden_field :password, value: Random.rand(111111...999999) %>
-    <% end %>
+  <%= form_with model: [current_user, @organization], local: true do |org| %>
+    
+    <div class="p-2">
+      <h2>Organization</h2>
+      <div>
+        
+        <%= org.label :Name_of_organization %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= org.text_field :name, class:"form-control" %>
+          </div>
+        </div>
+        <% @organization.errors[:name].each do |error| %>
+          <p class="text-danger mb-0 fs-6"><i><%=error%></i></p>
+        <% end %>
+      </div>
+      <div>
+        <%= org.label :Address %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= org.text_field :address, class:"form-control" %>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <% if @organization.new_record? %>
+        <h3>Create Admin For This Organization</h3>
+        <%= org.fields_for :admins, @admin do |admin| %>
+          
+          <%= admin.label :username %>
+          <div class="row">
+            <div class="col-md-6">
+              <%= admin.text_field :username, class:"form-control" %>
+              <% @admin.errors[:username].each do |error| %>
+                <p class="text-danger mb-0"><i><%=error%></i></p>
+              <% end %>
+            </div>
+          </div>
+          
+          
+          <%= admin.label :email %>
+          <div class="row">
+            <div class="col-md-6">
+              <%= admin.email_field :email, class:"form-control" %>
+              <% @admin.errors[:email].each do |error| %>
+                <p class="text-danger mb-0"><%=error%></p>
+              <% end %>
+            </div>
+          </div>
+          <%= admin.hidden_field :password, value: Random.rand(111111...999999) %>
+        <% end %>
+      <% end %>
+      <% if params[:action]=='edit' %>
+        <% @organization.admins.each do |admin| %>
+          Admin: <%= admin.username %>
+          <br/>
+        <% end %>
+      <% end %>
+      <%= org.submit class:"btn btn-primary mt-2" %>
+    </div>
+
   <% end %>
-  <% @organization.admins.each do |admin| %>
-    Admin: <%= admin.username %>
-    <br/>
-  <% end %>
-  <%= org.submit class:"btn btn-primary mt-2" %>
-<% end %>
